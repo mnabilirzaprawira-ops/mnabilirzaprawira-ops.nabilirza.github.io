@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nabil Forge App</title>
+    <style>
+        /* ==========================================
+           NABIL FORGE APK - ENGLISH EDITION
+           Developer: Nabil Irza Prawira (@n4bilirz)
+           ========================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Rajdhani:wght@500;700;800&display=swap');
+        
+        :root {
+            --bg-dark: #07020d;
+            --bg-light: #18052e;
+            --electro-glow: #b829ff;
+            --electro-light: #e0b0ff;
+            --cryo-glow: #7ac1f0;
+            --cryo-light: #d6f2ff;
+            --pyro-glow: #ff4d4d;
+            --gold: #ffd700;
+            --glass-bg: rgba(20, 5, 35, 0.65);
+            --glass-border: rgba(184, 41, 255, 0.4);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at top, var(--bg-light), var(--bg-dark) 100%);
+            background-attachment: fixed;
+            color: #fff; font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .top-loader {
+            position: fixed; top: 15px; right: 15px; width: 30px; height: 30px; z-index: 999;
+            border-radius: 50%; border: 3px solid transparent;
+            border-top-color: var(--electro-glow); border-bottom-color: var(--cryo-glow);
+            animation: spinLoader 1s linear infinite;
+        }
+        .top-loader::after {
+            content: ''; position: absolute; top: 3px; left: 3px; right: 3px; bottom: 3px;
+            border-radius: 50%; border: 2px solid transparent;
+            border-left-color: #fff; animation: spinLoader 0.5s linear infinite reverse;
+        }
+        @keyframes spinLoader { 100% { transform: rotate(360deg); } }
+
+        header { text-align: center; padding: 40px 20px 20px; }
+        header h1 { font-family: 'Cinzel', serif; font-size: 32px; margin: 0; text-shadow: 0 0 15px var(--electro-glow), 0 0 30px var(--cryo-glow); letter-spacing: 2px; }
+        header p { font-size: 14px; color: var(--electro-light); margin-top: 5px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+
+        .app-content { padding: 0 15px 90px 15px; }
+
+        .tab-section { display: none; animation: slideIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; }
+        .tab-section.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-title { font-family: 'Cinzel', serif; font-size: 20px; color: #fff; border-bottom: 2px solid var(--electro-glow); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; text-shadow: 0 0 10px var(--electro-glow);}
+
+        .card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
+            padding: 20px; margin-bottom: 20px; backdrop-filter: blur(10px);
+            box-shadow: inset 0 0 15px rgba(184, 41, 255, 0.1), 0 5px 20px rgba(0,0,0,0.6);
+            position: relative; overflow: hidden;
+        }
+        .card.cryo-card { border-color: var(--cryo-glow); box-shadow: inset 0 0 20px rgba(122, 193, 240, 0.15), 0 5px 20px rgba(0,0,0,0.6); }
+        .card.pyro-card { border-color: var(--pyro-glow); box-shadow: inset 0 0 20px rgba(255, 77, 77, 0.15), 0 5px 20px rgba(0,0,0,0.6); }
+        
+        .card h3 { font-family: 'Cinzel', serif; font-size: 20px; margin: 0 0 10px 0; text-shadow: 0 0 10px var(--electro-glow); }
+        .card.cryo-card h3 { text-shadow: 0 0 15px var(--cryo-glow); }
+        .card.pyro-card h3 { text-shadow: 0 0 15px var(--pyro-glow); }
+        
+        .badge { background: rgba(184, 41, 255, 0.2); border: 1px solid var(--electro-glow); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-bottom: 12px; display: inline-block; }
+        .badge.blue { background: rgba(122, 193, 240, 0.2); border-color: var(--cryo-glow); color: var(--cryo-light); }
+        .badge.red { background: rgba(255, 77, 77, 0.2); border-color: var(--pyro-glow); color: #ffe6e6; }
+        .badge.gold { background: rgba(255, 215, 0, 0.2); border-color: var(--gold); color: var(--gold); }
+        
+        .card p { font-size: 14px; line-height: 1.5; color: #d1b3ff; margin-bottom: 15px; }
+        .card.cryo-card p { color: #b8e2ff; }
+        .card.pyro-card p { color: #ffcccc; }
+
+        .btn-action {
+            display: block; width: 100%; text-align: center; text-decoration: none; box-sizing: border-box;
+            background: rgba(184, 41, 255, 0.15); color: #fff; border: 1px solid var(--electro-glow);
+            padding: 12px; border-radius: 8px; font-family: 'Cinzel', serif; font-weight: bold; font-size: 13px;
+            text-transform: uppercase; transition: 0.2s;
+        }
+        .btn-action:active { background: var(--electro-glow); transform: scale(0.98); }
+        .btn-cryo { background: rgba(122, 193, 240, 0.15); border-color: var(--cryo-glow); color: var(--cryo-light); }
+        .btn-cryo:active { background: var(--cryo-glow); color: #000; }
+        .btn-pyro { background: rgba(255, 77, 77, 0.15); border-color: var(--pyro-glow); color: #ffe6e6; }
+        .btn-pyro:active { background: var(--pyro-glow); color: #000; }
+
+        .stat-box { text-align: center; padding: 30px 10px; border-bottom: 1px dashed var(--electro-glow); }
+        .stat-title { font-family: 'Cinzel', serif; font-size: 14px; color: var(--electro-light); margin-bottom: 10px; }
+        .stat-num { font-size: 46px; font-weight: 800; color: #fff; font-family: monospace; text-shadow: 0 0 20px var(--electro-glow); }
+        .stat-ind { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--cryo-glow); font-weight: bold; margin-top: 10px; }
+        .dot { width: 6px; height: 6px; background: var(--cryo-glow); border-radius: 50%; box-shadow: 0 0 8px var(--cryo-glow); animation: blink 1s infinite; }
+
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; position: relative; z-index: 2; }
+        .profile-container { position: relative; width: 150px; height: 150px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #000; box-shadow: 0 0 20px var(--electro-glow); }
+        .profile-container::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: conic-gradient(transparent, var(--electro-glow), transparent, var(--cryo-glow)); animation: spinLoader 2s linear infinite; z-index: 1; }
+        
+        .donate-box { background: rgba(0,0,0,0.5); border: 1px dashed var(--gold); border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center; }
+        .donate-num { font-size: 24px; font-weight: bold; color: var(--gold); font-family: monospace; letter-spacing: 2px; }
+
+        .sys-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .sys-item { background: rgba(0,0,0,0.6); border-left: 3px solid var(--cryo-glow); padding: 12px 15px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .sys-label { font-size: 13px; color: var(--electro-light); text-transform: uppercase; font-weight: bold; }
+        .sys-val { font-size: 15px; font-family: monospace; font-weight: bold; color: #fff; text-shadow: 0 0 8px var(--cryo-glow); }
+        .root-warn { text-align: center; padding: 15px; border: 1px solid #ff4d4d; background: rgba(255, 77, 77, 0.1); color: #ff4d4d; font-weight: bold; border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+
+        .musou-nav {
+            position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 450px; height: 65px;
+            background: linear-gradient(135deg, #18052e, #07020d);
+            border: 1px solid var(--electro-glow);
+            border-radius: 15px 40px 15px 40px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 15px rgba(184, 41, 255, 0.4), inset 0 0 10px rgba(122, 193, 240, 0.2);
+            display: flex; justify-content: space-evenly; align-items: center;
+            z-index: 1000; overflow: hidden;
+        }
+        .musou-nav::after {
+            content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cryo-glow), var(--electro-glow), transparent);
+            z-index: 0; opacity: 0.5;
+        }
+        .nav-item {
+            position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 25%; height: 100%; color: #888; text-decoration: none; transition: 0.3s;
+        }
+        .nav-item.active { color: #fff; text-shadow: 0 0 10px var(--electro-glow); }
+        .nav-icon { font-size: 20px; margin-bottom: 3px; transition: 0.3s; }
+        .nav-item.active .nav-icon { transform: translateY(-3px) scale(1.1); filter: drop-shadow(0 0 5px var(--electro-light)); }
+        .nav-text { font-size: 10px; font-weight: bold; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-loader"></div>
+
+    <header>
+        <h1>NABIL FORGE</h1>
+        <p>Eternity Core Application</p>
+    </header>
+
+    <div class="app-content">
+        
+        <div id="menu-forge" class="tab-section active">
+            
+            <h2 class="section-title">Latest Highlight</h2>
+            <div class="card pyro-card">
+                <h3>AIOG V3 (Genshin)</h3>
+                <div class="badge red">🔥 Extreme Optimization</div>
+                <p>Featured on MagiskModule.com! OpenGL/Vulkan Driver tweaks, Anti-Early Thermal Throttling, Stable GPU Clock, Advanced Dex2oat & HYAL Support.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/AIOG-GI.3.zip" class="btn-action btn-pyro">📥 Download AIOG V3</a>
+            </div>
+
+            <h2 class="section-title">MRP Archives</h2>
+            <div class="card cryo-card">
+                <h3>V16 Columbina Cryo</h3>
+                <div class="badge blue">❄️ Absolute Zero</div>
+                <p>Features: Dynamic VFS Cache Pressure, FATUI Overclock, FSTRIM, & Deep SQLite Vacuum. Perfect for heavy gaming and multitasking.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V16.Columbia.Cryo.zip" class="btn-action btn-cryo">📥 Download V16</a>
+            </div>
+
+            <div class="card">
+                <h3>V15.17 Raiden Ei</h3>
+                <div class="badge gold">🎉 17th Birthday Edition</div>
+                <p>Exclusive 17th Birthday Edition. Merges Electro-Cryo elements with Singularity Spoofing (Pixel 10 Pro).</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V15.17.birthday.Editions.zip" class="btn-action">📥 Download V15.17</a>
+            </div>
+
+            <div class="card">
+                <h3>V14 Aether Core</h3>
+                <div class="badge">Masterpiece</div>
+                <p>ART Compiler Turbo & full Hardware Acceleration. Guaranteed Zero Error 255 in TWRP/OrangeFox.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V14.Aether.Core.zip" class="btn-action">📥 Download V14</a>
+            </div>
+
+            <div class="card">
+                <h3>V13 Quantum Velocity</h3>
+                <p>TCP Westwood optimization for ultimate network stability & ZRAM LZ4 tuning.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V13.Quantum.Velocity.zip" class="btn-action">📥 Download V13</a>
+            </div>
+
+            <div class="card">
+                <h3>V12 Titanium Core</h3>
+                <p>Focused entirely on aggressive Touch Responsiveness and reducing rendering lag.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V12.Titanium.Core.zip" class="btn-action">📥 Download V12</a>
+            </div>
+
+            <div class="card" style="margin-bottom: 40px;">
+                <h3>V11 Pro Stable</h3>
+                <p>Extremely lightweight, battery-friendly, explicitly designed for casual daily usage.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V11.Pro.Stable.zip" class="btn-action">📥 Download V11</a>
+            </div>
+        </div>
+
+        <div id="menu-stats" class="tab-section">
+            <h2 class="section-title">Eternity Stats</h2>
+            <div class="card">
+                <div class="stat-box">
+                    <div class="stat-title">Total Web / App Visitors</div>
+                    <div class="stat-num" id="visit-count">14,208</div>
+                    <div class="stat-ind"><div class="dot"></div> Live Tracking Active</div>
+                </div>
+                <div class="stat-box" style="border-bottom: none;">
+                    <div class="stat-title">Total Modules Downloaded</div>
+                    <div style="font-size: 11px; color: #888; margin-bottom: 5px;">(All Archives Aggregated)</div>
+                    <div class="stat-num" id="dl-count" style="color: var(--cryo-glow); text-shadow: 0 0 20px var(--cryo-glow);">8,743</div>
+                    <div class="stat-ind"><div class="dot"></div> Server Sync Active</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="menu-architect" class="tab-section">
+            <h2 class="section-title">Architect Data</h2>
+            <div class="card" style="text-align: center;">
+                <div class="profile-container">
+                    <img src="2434.jpg" class="profile-pic" alt="Nabil Irza Prawira" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'140\'><rect width=\'140\' height=\'140\' fill=\'%2318052e\'/><text x=\'50%\' y=\'50%\' font-family=\'monospace\' font-size=\'12\' fill=\'%23d6f2ff\' text-anchor=\'middle\' dominant-baseline=\'middle\'>Image 2434.jpg</text></svg>'">
+                </div>
+                <h3 style="font-size: 24px;">M. Nabil Irza Prawira</h3>
+                <div class="badge gold">17 Years Old • Lead Modder</div>
+                <p style="font-size: 13px; margin-top: 10px;">"I dictate performance. Harness the Unpredictable."</p>
+                
+                <div class="donate-box">
+                    <div style="font-size: 12px; color: #aaa; text-transform: uppercase;">Support Developer (DANA/GoPay)</div>
+                    <div class="donate-num">082160654849</div>
+                </div>
+
+                <a href="https://t.me/official_grup_nabil" class="btn-action" style="margin-bottom: 10px;">💬 Telegram Group</a>
+                <a href="https://www.instagram.com/n4bilirzap.zw?igsh=MTNrbGwwNnc5ODk4bQ==" class="btn-action btn-cryo">📸 Follow Instagram</a>
+            </div>
+
+            <h2 class="section-title">Hall of Fame</h2>
+            <div class="card">
+                <h4 style="margin: 0 0 5px 0; color: #fff;">✦ Gemini (AI)</h4>
+                <p style="font-size: 12px; margin-bottom: 15px;">AI Co-Pilot for coding logic and UI/UX architecture.</p>
+                
+                <h4 style="margin: 0 0 5px 0; color: #fff;">✦ Sundar Pichai</h4>
+                <p style="font-size: 12px; margin-bottom: 15px;">Visionary CEO of Google, making this AI collaboration possible.</p>
+
+                <h4 style="margin: 0 0 5px 0; color: #fff;">✦ TopJohnWu & Chainfire</h4>
+                <p style="font-size: 12px; margin-bottom: 0;">Legends of Android Systemless Root (Magisk & SuperSU).</p>
+            </div>
+        </div>
+
+        <div id="menu-sysinfo" class="tab-section">
+            <h2 class="section-title">Hardware Scanner</h2>
+            
+            <div class="root-warn" id="root-status">
+                [ WAITING FOR SYSTEM SCAN ]
+            </div>
+
+            <div class="card sys-grid">
+                <div class="sys-item">
+                    <span class="sys-label">Device Name</span>
+                    <span class="sys-val" id="si-dev">---</span>
+                </div>
+                <div class="sys-item">
+                    <span class="sys-label">Android Version</span>
+                    <span class="sys-val" id="si-os">---</span>
+                </div>
+                <div class="sys-item">
+                    <span class="sys-label">Kernel Core</span>
+                    <span class="sys-val" id="si-kernel">---</span>
+                </div>
+                <div class="sys-item">
+                    <span class="sys-label">RAM Memory</span>
+                    <span class="sys-val" id="si-ram">---</span>
+                </div>
+                <div class="sys-item">
+                    <span class="sys-label">Storage (ROM)</span>
+                    <span class="sys-val" id="si-rom">---</span>
+                </div>
+            </div>
+            <p style="font-size: 12px; text-align: center; color: #888;">*App is running in Non-Root Mode. Some information may be restricted by Android OS.</p>
+            <button class="btn-action" onclick="checkRootAccess()">🔄 Scan System Info</button>
+        </div>
+
+    </div>
+
+    <nav class="musou-nav">
+        <div class="nav-item active" onclick="switchNav('forge', this)">
+            <div class="nav-icon">⚔️</div>
+            <div class="nav-text">FORGE</div>
+        </div>
+        <div class="nav-item" onclick="switchNav('stats', this)">
+            <div class="nav-icon">📊</div>
+            <div class="nav-text">STATS</div>
+        </div>
+        <div class="nav-item" onclick="switchNav('architect', this)">
+            <div class="nav-icon">👤</div>
+            <div class="nav-text">DEV</div>
+        </div>
+        <div class="nav-item" onclick="switchNav('sysinfo', this)">
+            <div class="nav-icon">📱</div>
+            <div class="nav-text">SYSINFO</div>
+        </div>
+    </nav>
+
+    <script>
+        // --- NAVIGATION LOGIC ---
+        function switchNav(menuId, el) {
+            document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.getElementById('menu-' + menuId).classList.add('active');
+            el.classList.add('active');
+            window.scrollTo(0, 0);
+
+            if(menuId === 'sysinfo') checkRootAccess();
+        }
+
+        // --- LIVE STATS SIMULATOR ---
+        let vCount = 45280, dCount = 31405;
+        const vEl = document.getElementById('visit-count'), dEl = document.getElementById('dl-count');
+        const diffH = Math.floor((Date.now() - new Date('2026-03-01').getTime()) / 3600000);
+        vCount += (diffH * 14); dCount += (diffH * 8);
+
+        function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+        vEl.innerText = fmt(vCount); dEl.innerText = fmt(dCount);
+
+        setInterval(() => {
+            if(Math.random() > 0.6) {
+                vCount += Math.floor(Math.random()*3)+1; vEl.innerText = fmt(vCount);
+            }
+        }, 3000);
+        setInterval(() => {
+            if(Math.random() > 0.7) {
+                dCount += Math.floor(Math.random()*2)+1; dEl.innerText = fmt(dCount);
+            }
+        }, 5000);
+
+        // --- SYSTEM INFO LOGIC (NON-ROOT MODE) ---
+        function checkRootAccess() {
+            const warn = document.getElementById('root-status');
+            const dev = document.getElementById('si-dev');
+            const os = document.getElementById('si-os');
+            const krn = document.getElementById('si-kernel');
+            const ram = document.getElementById('si-ram');
+            const rom = document.getElementById('si-rom');
+
+            warn.innerHTML = "<span style='color:#4dffb8'>[ SCAN SUCCESSFUL: NON-ROOT MODE ]</span>";
+            warn.style.borderColor = "#4dffb8"; 
+            warn.style.background = "rgba(77, 255, 184, 0.1)";
+
+            let ua = navigator.userAgent;
+            
+            let andVerMatch = ua.match(/Android\s([0-9\.]+)/);
+            
+            let deviceMatch = ua.match(/\(([^)]+)\)/);
+            let deviceName = "Android Device";
+            if(deviceMatch) {
+                let parts = deviceMatch[1].split(';');
+                if(parts.length > 2) deviceName = parts[2].trim();
+            }
+
+            let mem = navigator.deviceMemory ? navigator.deviceMemory + " GB" : "N/A";
+
+            dev.innerText = deviceName;
+            os.innerText = andVerMatch ? "Android " + andVerMatch[1] : "Unknown OS";
+            krn.innerText = "Linux (Non-Root)";
+            ram.innerText = "~" + mem;
+            rom.innerText = "Restricted by OS";
+        }
+    </script>
+</body>
+</html>
