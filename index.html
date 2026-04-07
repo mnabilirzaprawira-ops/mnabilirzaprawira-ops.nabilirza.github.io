@@ -6,134 +6,135 @@
     <title>Nabil Forge App</title>
     <style>
         /* ==========================================
-           NABIL FORGE APK - ENGLISH EDITION
+           NABIL FORGE APK - iOS EDITION (WEBVIEW)
            Developer: Nabil Irza Prawira (@n4bilirz)
+           Theme: iOS 17 Dark Mode (App Store & Settings)
            ========================================== */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Rajdhani:wght@500;700;800&display=swap');
-        
         :root {
-            --bg-dark: #07020d;
-            --bg-light: #18052e;
-            --electro-glow: #b829ff;
-            --electro-light: #e0b0ff;
-            --cryo-glow: #7ac1f0;
-            --cryo-light: #d6f2ff;
-            --pyro-glow: #ff4d4d;
-            --gold: #ffd700;
-            --glass-bg: rgba(20, 5, 35, 0.65);
-            --glass-border: rgba(184, 41, 255, 0.4);
+            /* iOS System Colors */
+            --bg-ios: #000000;
+            --bg-secondary: #1c1c1e;
+            --bg-tertiary: #2c2c2e;
+            --text-main: #ffffff;
+            --text-secondary: rgba(235, 235, 245, 0.6);
+            --separator: rgba(84, 84, 88, 0.65);
+            
+            /* App Accent Colors */
+            --ios-purple: #bf5af2;
+            --ios-blue: #0a84ff;
+            --ios-red: #ff453a;
+            --ios-green: #32d74b;
+            --ios-gold: #ffd60a;
+            
+            --ios-radius: 16px;
+            --ios-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         body {
             margin: 0; padding: 0;
-            background: radial-gradient(circle at top, var(--bg-light), var(--bg-dark) 100%);
-            background-attachment: fixed;
-            color: #fff; font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-ios);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* Clean iOS Activity Indicator */
         .top-loader {
-            position: fixed; top: 15px; right: 15px; width: 30px; height: 30px; z-index: 999;
-            border-radius: 50%; border: 3px solid transparent;
-            border-top-color: var(--electro-glow); border-bottom-color: var(--cryo-glow);
-            animation: spinLoader 1s linear infinite;
-        }
-        .top-loader::after {
-            content: ''; position: absolute; top: 3px; left: 3px; right: 3px; bottom: 3px;
-            border-radius: 50%; border: 2px solid transparent;
-            border-left-color: #fff; animation: spinLoader 0.5s linear infinite reverse;
+            position: fixed; top: 15px; right: 15px; width: 20px; height: 20px; z-index: 999;
+            border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.2);
+            border-top-color: var(--ios-purple);
+            animation: spinLoader 0.8s linear infinite;
         }
         @keyframes spinLoader { 100% { transform: rotate(360deg); } }
 
-        header { text-align: center; padding: 40px 20px 20px; }
-        header h1 { font-family: 'Cinzel', serif; font-size: 32px; margin: 0; text-shadow: 0 0 15px var(--electro-glow), 0 0 30px var(--cryo-glow); letter-spacing: 2px; }
-        header p { font-size: 14px; color: var(--electro-light); margin-top: 5px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        /* iOS Large Title Header */
+        header { text-align: left; padding: 50px 20px 10px; border-bottom: 0.5px solid var(--separator); background: var(--bg-ios); position: sticky; top: 0; z-index: 900;}
+        header h1 { font-size: 34px; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
+        header p { font-size: 13px; color: var(--text-secondary); margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .app-content { padding: 0 15px 90px 15px; }
+        /* Padding bottom to prevent content hiding behind tab bar */
+        .app-content { padding: 20px 15px 110px 15px; }
 
-        .tab-section { display: none; animation: slideIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; }
-        .tab-section.active { display: block; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-section { display: none; opacity: 0; transition: opacity 0.3s var(--ios-easing); }
+        .tab-section.active { display: block; animation: smoothFadeIn 0.4s var(--ios-easing) forwards; }
+        @keyframes smoothFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .section-title { font-family: 'Cinzel', serif; font-size: 20px; color: #fff; border-bottom: 2px solid var(--electro-glow); display: inline-block; padding-bottom: 5px; margin-bottom: 20px; text-shadow: 0 0 10px var(--electro-glow);}
+        /* iOS App Store Section Titles */
+        .section-title { font-size: 22px; font-weight: 700; color: var(--text-main); border-bottom: 0.5px solid var(--separator); padding-bottom: 8px; margin-bottom: 20px; letter-spacing: -0.5px; margin-top: 10px;}
 
+        /* iOS App Cards */
         .card {
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px;
-            padding: 20px; margin-bottom: 20px; backdrop-filter: blur(10px);
-            box-shadow: inset 0 0 15px rgba(184, 41, 255, 0.1), 0 5px 20px rgba(0,0,0,0.6);
-            position: relative; overflow: hidden;
+            background: var(--bg-secondary); border-radius: var(--ios-radius);
+            padding: 20px; margin-bottom: 15px;
+            border: 0.5px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column;
+            transition: transform 0.2s var(--ios-easing), background 0.2s var(--ios-easing);
         }
-        .card.cryo-card { border-color: var(--cryo-glow); box-shadow: inset 0 0 20px rgba(122, 193, 240, 0.15), 0 5px 20px rgba(0,0,0,0.6); }
-        .card.pyro-card { border-color: var(--pyro-glow); box-shadow: inset 0 0 20px rgba(255, 77, 77, 0.15), 0 5px 20px rgba(0,0,0,0.6); }
+        .card:active { transform: scale(0.97); background: var(--bg-tertiary); }
         
-        .card h3 { font-family: 'Cinzel', serif; font-size: 20px; margin: 0 0 10px 0; text-shadow: 0 0 10px var(--electro-glow); }
-        .card.cryo-card h3 { text-shadow: 0 0 15px var(--cryo-glow); }
-        .card.pyro-card h3 { text-shadow: 0 0 15px var(--pyro-glow); }
+        .card h3 { font-size: 18px; font-weight: 700; margin: 0 0 6px 0; letter-spacing: -0.3px; }
+        .card p { font-size: 14px; line-height: 1.4; color: var(--text-secondary); margin-bottom: 15px; flex-grow: 1; }
         
-        .badge { background: rgba(184, 41, 255, 0.2); border: 1px solid var(--electro-glow); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-bottom: 12px; display: inline-block; }
-        .badge.blue { background: rgba(122, 193, 240, 0.2); border-color: var(--cryo-glow); color: var(--cryo-light); }
-        .badge.red { background: rgba(255, 77, 77, 0.2); border-color: var(--pyro-glow); color: #ffe6e6; }
-        .badge.gold { background: rgba(255, 215, 0, 0.2); border-color: var(--gold); color: var(--gold); }
+        /* iOS Tag Badges */
+        .badge { padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; margin-bottom: 12px; display: inline-flex; letter-spacing: 0.5px; text-transform: uppercase; }
+        .badge.purple { background: rgba(191, 90, 242, 0.15); color: var(--ios-purple); }
+        .badge.blue { background: rgba(10, 132, 255, 0.15); color: var(--ios-blue); }
+        .badge.red { background: rgba(255, 69, 58, 0.15); color: var(--ios-red); }
+        .badge.gold { background: rgba(255, 214, 10, 0.15); color: var(--ios-gold); }
         
-        .card p { font-size: 14px; line-height: 1.5; color: #d1b3ff; margin-bottom: 15px; }
-        .card.cryo-card p { color: #b8e2ff; }
-        .card.pyro-card p { color: #ffcccc; }
-
+        /* App Store "GET" Button */
         .btn-action {
             display: block; width: 100%; text-align: center; text-decoration: none; box-sizing: border-box;
-            background: rgba(184, 41, 255, 0.15); color: #fff; border: 1px solid var(--electro-glow);
-            padding: 12px; border-radius: 8px; font-family: 'Cinzel', serif; font-weight: bold; font-size: 13px;
-            text-transform: uppercase; transition: 0.2s;
+            background: rgba(255,255,255,0.1); color: var(--ios-purple);
+            padding: 10px; border-radius: 30px; font-weight: 700; font-size: 15px;
+            transition: 0.2s;
         }
-        .btn-action:active { background: var(--electro-glow); transform: scale(0.98); }
-        .btn-cryo { background: rgba(122, 193, 240, 0.15); border-color: var(--cryo-glow); color: var(--cryo-light); }
-        .btn-cryo:active { background: var(--cryo-glow); color: #000; }
-        .btn-pyro { background: rgba(255, 77, 77, 0.15); border-color: var(--pyro-glow); color: #ffe6e6; }
-        .btn-pyro:active { background: var(--pyro-glow); color: #000; }
+        .btn-action:active { background: rgba(255,255,255,0.05); transform: scale(0.96); }
+        .btn-blue { color: var(--ios-blue); background: rgba(10, 132, 255, 0.1); }
+        .btn-red { color: var(--ios-red); background: rgba(255, 69, 58, 0.1); }
 
-        .stat-box { text-align: center; padding: 30px 10px; border-bottom: 1px dashed var(--electro-glow); }
-        .stat-title { font-family: 'Cinzel', serif; font-size: 14px; color: var(--electro-light); margin-bottom: 10px; }
-        .stat-num { font-size: 46px; font-weight: 800; color: #fff; font-family: monospace; text-shadow: 0 0 20px var(--electro-glow); }
-        .stat-ind { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--cryo-glow); font-weight: bold; margin-top: 10px; }
-        .dot { width: 6px; height: 6px; background: var(--cryo-glow); border-radius: 50%; box-shadow: 0 0 8px var(--cryo-glow); animation: blink 1s infinite; }
+        /* Stats Tab (iOS Health style) */
+        .stat-box { background: var(--bg-secondary); border-radius: var(--ios-radius); padding: 25px 15px; text-align: center; margin-bottom: 15px; border: 0.5px solid rgba(255,255,255,0.05);}
+        .stat-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px; }
+        .stat-num { font-size: 40px; font-weight: 800; color: var(--text-main); letter-spacing: -1px; }
+        .stat-ind { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ios-green); font-weight: 600; margin-top: 10px; text-transform: uppercase;}
+        .dot { width: 8px; height: 8px; background: var(--ios-green); border-radius: 50%; box-shadow: 0 0 8px var(--ios-green); animation: blink 2s infinite; }
 
-        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; position: relative; z-index: 2; }
-        .profile-container { position: relative; width: 150px; height: 150px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #000; box-shadow: 0 0 20px var(--electro-glow); }
-        .profile-container::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; background: conic-gradient(transparent, var(--electro-glow), transparent, var(--cryo-glow)); animation: spinLoader 2s linear infinite; z-index: 1; }
+        /* Profile Style */
+        .profile-container { position: relative; width: 120px; height: 120px; margin: 0 auto 15px; border-radius: 50%; }
+        .profile-pic { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-tertiary); box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
         
-        .donate-box { background: rgba(0,0,0,0.5); border: 1px dashed var(--gold); border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center; }
-        .donate-num { font-size: 24px; font-weight: bold; color: var(--gold); font-family: monospace; letter-spacing: 2px; }
+        .donate-box { background: var(--bg-tertiary); border-radius: 12px; padding: 15px; margin: 20px 0; text-align: center; }
+        .donate-num { font-size: 22px; font-weight: 700; color: var(--ios-purple); font-family: monospace; letter-spacing: 1px; margin-top: 5px;}
 
-        .sys-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .sys-item { background: rgba(0,0,0,0.6); border-left: 3px solid var(--cryo-glow); padding: 12px 15px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
-        .sys-label { font-size: 13px; color: var(--electro-light); text-transform: uppercase; font-weight: bold; }
-        .sys-val { font-size: 15px; font-family: monospace; font-weight: bold; color: #fff; text-shadow: 0 0 8px var(--cryo-glow); }
-        .root-warn { text-align: center; padding: 15px; border: 1px solid #ff4d4d; background: rgba(255, 77, 77, 0.1); color: #ff4d4d; font-weight: bold; border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+        /* iOS Settings List Style for SysInfo */
+        .settings-group { background: var(--bg-secondary); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+        .sys-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 0.5px solid var(--separator); }
+        .sys-item:last-child { border-bottom: none; }
+        .sys-label { font-size: 15px; color: var(--text-main); }
+        .sys-val { font-size: 15px; color: var(--text-secondary); }
+        
+        .root-warn { text-align: center; padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; font-weight: 600; }
 
+        /* Native iOS Tab Bar (Bottom Nav) */
         .musou-nav {
-            position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%);
-            width: 92%; max-width: 450px; height: 65px;
-            background: linear-gradient(135deg, #18052e, #07020d);
-            border: 1px solid var(--electro-glow);
-            border-radius: 15px 40px 15px 40px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 15px rgba(184, 41, 255, 0.4), inset 0 0 10px rgba(122, 193, 240, 0.2);
-            display: flex; justify-content: space-evenly; align-items: center;
-            z-index: 1000; overflow: hidden;
-        }
-        .musou-nav::after {
-            content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cryo-glow), var(--electro-glow), transparent);
-            z-index: 0; opacity: 0.5;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 85px; /* Extra height for safe area */
+            background: rgba(28, 28, 30, 0.85);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            border-top: 0.5px solid rgba(255,255,255,0.1);
+            display: flex; justify-content: space-around; align-items: flex-start;
+            padding-top: 10px; z-index: 1000;
         }
         .nav-item {
-            position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 25%; height: 100%; color: #888; text-decoration: none; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 25%; color: var(--text-secondary); text-decoration: none; transition: 0.2s;
         }
-        .nav-item.active { color: #fff; text-shadow: 0 0 10px var(--electro-glow); }
-        .nav-icon { font-size: 20px; margin-bottom: 3px; transition: 0.3s; }
-        .nav-item.active .nav-icon { transform: translateY(-3px) scale(1.1); filter: drop-shadow(0 0 5px var(--electro-light)); }
-        .nav-text { font-size: 10px; font-weight: bold; font-family: 'Cinzel', serif; letter-spacing: 1px; }
+        .nav-item.active { color: var(--ios-purple); }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-text { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; }
 
     </style>
 </head>
@@ -142,7 +143,7 @@
     <div class="top-loader"></div>
 
     <header>
-        <h1>NABIL FORGE</h1>
+        <h1>Nabil Forge</h1>
         <p>Eternity Core Application</p>
     </header>
 
@@ -151,68 +152,91 @@
         <div id="menu-forge" class="tab-section active">
             
             <h2 class="section-title">Latest Highlight</h2>
-            <div class="card pyro-card">
-                <h3>AIOG V3 (Genshin)</h3>
-                <div class="badge red">🔥 Extreme Optimization</div>
-                <p>Featured on MagiskModule.com! OpenGL/Vulkan Driver tweaks, Anti-Early Thermal Throttling, Stable GPU Clock, Advanced Dex2oat & HYAL Support.</p>
-                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/AIOG-GI.3.zip" class="btn-action btn-pyro">📥 Download AIOG V3</a>
-            </div>
-
-            <h2 class="section-title">MRP Archives</h2>
-            <div class="card cryo-card">
-                <h3>V16 Columbina Cryo</h3>
-                <div class="badge blue">❄️ Absolute Zero</div>
-                <p>Features: Dynamic VFS Cache Pressure, FATUI Overclock, FSTRIM, & Deep SQLite Vacuum. Perfect for heavy gaming and multitasking.</p>
-                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V16.Columbia.Cryo.zip" class="btn-action btn-cryo">📥 Download V16</a>
+            
+            <div class="card">
+                <h3 style="color: var(--ios-red);">AIOG V4 (Ultra)</h3>
+                <div class="badge red">Max FPS & Low Ping</div>
+                <p>V4 Update! Target utama: Genshin Impact stabil. Optimasi agresif OpenGL/Vulkan, Ultimate Anti-Thermal Throttling, Stable GPU Clock, Network Ping Stabilizer, Advanced Dex2oat & HYAL.</p>
+                <a href="#" class="btn-action btn-red">GET</a>
             </div>
 
             <div class="card">
-                <h3>V15.17 Raiden Ei</h3>
-                <div class="badge gold">🎉 17th Birthday Edition</div>
+                <h3>AIOG V3 (Genshin)</h3>
+                <div class="badge red">Extreme Optimization</div>
+                <p>Featured on MagiskModule.com! OpenGL/Vulkan Driver tweaks, Anti-Early Thermal Throttling, Stable GPU Clock, Advanced Dex2oat & HYAL Support.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/AIOG-GI.3.zip" class="btn-action btn-red">GET</a>
+            </div>
+
+            <h2 class="section-title">MRP Archives</h2>
+
+            <div class="card">
+                <h3 style="color: var(--ios-blue);">V18 Fontaine Hydro</h3>
+                <div class="badge blue">Fluidity Logic 11.0</div>
+                <p>Featuring Pneuma-Ousia Dynamic Scaling, Aggressive TCP BBR, SurfaceFlinger HW Acceleration, and deep Hydro-Cleanse Vacuum. Designed for water-smooth UI responsiveness.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V18.Fontaine.zip" class="btn-action btn-blue">GET</a>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--ios-purple);">V17.17 Raiden Ei</h3>
+                <div class="badge purple">Eternity Logic 10.0</div>
+                <p>Featuring Musou RAM Sync, CPU+GPU Eternity Overclock, ART Compiler Speed Injection, and Cryo Database Z. Engineered for absolute thermal control.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V17.17.Raiden.EI.zip" class="btn-action">GET</a>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--ios-blue);">V16 Columbina Cryo</h3>
+                <div class="badge blue">Absolute Zero</div>
+                <p>Features: Dynamic VFS Cache Pressure, FATUI Overclock, FSTRIM, & Deep SQLite Vacuum. Perfect for heavy gaming and multitasking.</p>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V16.Columbia.Cryo.zip" class="btn-action btn-blue">GET</a>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--ios-gold);">V15.17 Raiden Ei</h3>
+                <div class="badge gold">17th Birthday Edition</div>
                 <p>Exclusive 17th Birthday Edition. Merges Electro-Cryo elements with Singularity Spoofing (Pixel 10 Pro).</p>
-                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V15.17.birthday.Editions.zip" class="btn-action">📥 Download V15.17</a>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V15.17.birthday.Editions.zip" class="btn-action" style="color: var(--ios-gold); background: rgba(255, 214, 10, 0.1);">GET</a>
             </div>
 
             <div class="card">
                 <h3>V14 Aether Core</h3>
-                <div class="badge">Masterpiece</div>
+                <div class="badge purple">Masterpiece</div>
                 <p>ART Compiler Turbo & full Hardware Acceleration. Guaranteed Zero Error 255 in TWRP/OrangeFox.</p>
-                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V14.Aether.Core.zip" class="btn-action">📥 Download V14</a>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V14.Aether.Core.zip" class="btn-action">GET</a>
             </div>
 
             <div class="card">
                 <h3>V13 Quantum Velocity</h3>
                 <p>TCP Westwood optimization for ultimate network stability & ZRAM LZ4 tuning.</p>
-                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V13.Quantum.Velocity.zip" class="btn-action">📥 Download V13</a>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V13.Quantum.Velocity.zip" class="btn-action">GET</a>
             </div>
 
             <div class="card">
                 <h3>V12 Titanium Core</h3>
                 <p>Focused entirely on aggressive Touch Responsiveness and reducing rendering lag.</p>
-                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V12.Titanium.Core.zip" class="btn-action">📥 Download V12</a>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V12.Titanium.Core.zip" class="btn-action">GET</a>
             </div>
 
-            <div class="card" style="margin-bottom: 40px;">
+            <div class="card">
                 <h3>V11 Pro Stable</h3>
                 <p>Extremely lightweight, battery-friendly, explicitly designed for casual daily usage.</p>
-                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V11.Pro.Stable.zip" class="btn-action">📥 Download V11</a>
+                <a href="https://github.com/mnabilirzaprawira-ops/Module-File-Hare/releases/download/Module/Magic_Random-Pro-V11.Pro.Stable.zip" class="btn-action">GET</a>
             </div>
         </div>
 
         <div id="menu-stats" class="tab-section">
             <h2 class="section-title">Eternity Stats</h2>
-            <div class="card">
-                <div class="stat-box">
-                    <div class="stat-title">Total Web / App Visitors</div>
-                    <div class="stat-num" id="visit-count">14,208</div>
-                    <div class="stat-ind"><div class="dot"></div> Live Tracking Active</div>
-                </div>
-                <div class="stat-box" style="border-bottom: none;">
-                    <div class="stat-title">Total Modules Downloaded</div>
-                    <div style="font-size: 11px; color: #888; margin-bottom: 5px;">(All Archives Aggregated)</div>
-                    <div class="stat-num" id="dl-count" style="color: var(--cryo-glow); text-shadow: 0 0 20px var(--cryo-glow);">8,743</div>
-                    <div class="stat-ind"><div class="dot"></div> Server Sync Active</div>
-                </div>
+            
+            <div class="stat-box">
+                <div class="stat-title">Total Web / App Visitors</div>
+                <div class="stat-num" id="visit-count">14,208</div>
+                <div class="stat-ind"><div class="dot"></div> Live Tracking Active</div>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-title">Modules Downloaded</div>
+                <div style="font-size: 11px; color: var(--separator); margin-bottom: 5px;">All Archives Aggregated</div>
+                <div class="stat-num" id="dl-count" style="color: var(--ios-blue);">8,743</div>
+                <div class="stat-ind"><div class="dot"></div> Server Sync Active</div>
             </div>
         </div>
 
@@ -220,42 +244,42 @@
             <h2 class="section-title">Architect Data</h2>
             <div class="card" style="text-align: center;">
                 <div class="profile-container">
-                    <img src="2434.jpg" class="profile-pic" alt="Nabil Irza Prawira" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'140\'><rect width=\'140\' height=\'140\' fill=\'%2318052e\'/><text x=\'50%\' y=\'50%\' font-family=\'monospace\' font-size=\'12\' fill=\'%23d6f2ff\' text-anchor=\'middle\' dominant-baseline=\'middle\'>Image 2434.jpg</text></svg>'">
+                    <img src="2434.jpg" class="profile-pic" alt="Nabil Irza Prawira" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'140\'><rect width=\'140\' height=\'140\' fill=\'%231c1c1e\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'12\' fill=\'%23bf5af2\' text-anchor=\'middle\' dominant-baseline=\'middle\'>IMG</text></svg>'">
                 </div>
-                <h3 style="font-size: 24px;">M. Nabil Irza Prawira</h3>
+                <h3 style="font-size: 22px;">M. Nabil Irza Prawira</h3>
                 <div class="badge gold">17 Years Old • Lead Modder</div>
-                <p style="font-size: 13px; margin-top: 10px;">"I dictate performance. Harness the Unpredictable."</p>
+                <p style="font-size: 13px; margin-top: 5px;">"I dictate performance. Harness the Unpredictable."</p>
                 
                 <div class="donate-box">
-                    <div style="font-size: 12px; color: #aaa; text-transform: uppercase;">Support Developer (DANA/GoPay)</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); font-weight: 600;">SUPPORT (DANA/GOPAY)</div>
                     <div class="donate-num">082160654849</div>
                 </div>
 
-                <a href="https://t.me/official_grup_nabil" class="btn-action" style="margin-bottom: 10px;">💬 Telegram Group</a>
-                <a href="https://www.instagram.com/n4bilirzap.zw?igsh=MTNrbGwwNnc5ODk4bQ==" class="btn-action btn-cryo">📸 Follow Instagram</a>
+                <a href="https://t.me/official_grup_nabil" class="btn-action" style="margin-bottom: 10px; background: rgba(255,255,255,0.1); color: #fff;">💬 Telegram Group</a>
+                <a href="https://www.instagram.com/n4bilirzap.zw?igsh=MTNrbGwwNnc5ODk4bQ==" class="btn-action btn-red">📸 Follow Instagram</a>
             </div>
 
             <h2 class="section-title">Hall of Fame</h2>
             <div class="card">
-                <h4 style="margin: 0 0 5px 0; color: #fff;">✦ Gemini (AI)</h4>
-                <p style="font-size: 12px; margin-bottom: 15px;">AI Co-Pilot for coding logic and UI/UX architecture.</p>
+                <h4 style="margin: 0 0 5px 0; font-size: 16px;">✦ Gemini (AI)</h4>
+                <p style="font-size: 13px; margin-bottom: 15px;">AI Co-Pilot for coding logic and UI/UX architecture.</p>
                 
-                <h4 style="margin: 0 0 5px 0; color: #fff;">✦ Sundar Pichai</h4>
-                <p style="font-size: 12px; margin-bottom: 15px;">Visionary CEO of Google, making this AI collaboration possible.</p>
+                <h4 style="margin: 0 0 5px 0; font-size: 16px;">✦ Sundar Pichai</h4>
+                <p style="font-size: 13px; margin-bottom: 15px;">Visionary CEO of Google, making this AI collaboration possible.</p>
 
-                <h4 style="margin: 0 0 5px 0; color: #fff;">✦ TopJohnWu & Chainfire</h4>
-                <p style="font-size: 12px; margin-bottom: 0;">Legends of Android Systemless Root (Magisk & SuperSU).</p>
+                <h4 style="margin: 0 0 5px 0; font-size: 16px;">✦ TopJohnWu & Chainfire</h4>
+                <p style="font-size: 13px; margin-bottom: 0;">Legends of Android Systemless Root (Magisk & SuperSU).</p>
             </div>
         </div>
 
         <div id="menu-sysinfo" class="tab-section">
             <h2 class="section-title">Hardware Scanner</h2>
             
-            <div class="root-warn" id="root-status">
+            <div class="root-warn" id="root-status" style="background: rgba(255,255,255,0.1); color: var(--text-secondary);">
                 [ WAITING FOR SYSTEM SCAN ]
             </div>
 
-            <div class="card sys-grid">
+            <div class="settings-group">
                 <div class="sys-item">
                     <span class="sys-label">Device Name</span>
                     <span class="sys-val" id="si-dev">---</span>
@@ -277,15 +301,16 @@
                     <span class="sys-val" id="si-rom">---</span>
                 </div>
             </div>
-            <p style="font-size: 12px; text-align: center; color: #888;">*App is running in Non-Root Mode. Some information may be restricted by Android OS.</p>
-            <button class="btn-action" onclick="checkRootAccess()">🔄 Scan System Info</button>
+            
+            <p style="font-size: 12px; text-align: center; color: var(--separator); margin-bottom: 20px;">*App is running in Non-Root Mode. Some information may be restricted by Android OS.</p>
+            <button class="btn-action" onclick="checkRootAccess()" style="background: rgba(255,255,255,0.1); color: #fff;">🔄 Rescan System</button>
         </div>
 
     </div>
 
     <nav class="musou-nav">
         <div class="nav-item active" onclick="switchNav('forge', this)">
-            <div class="nav-icon">⚔️</div>
+            <div class="nav-icon">🛡️</div>
             <div class="nav-text">FORGE</div>
         </div>
         <div class="nav-item" onclick="switchNav('stats', this)">
@@ -297,7 +322,7 @@
             <div class="nav-text">DEV</div>
         </div>
         <div class="nav-item" onclick="switchNav('sysinfo', this)">
-            <div class="nav-icon">📱</div>
+            <div class="nav-icon">⚙️</div>
             <div class="nav-text">SYSINFO</div>
         </div>
     </nav>
@@ -305,9 +330,17 @@
     <script>
         // --- NAVIGATION LOGIC ---
         function switchNav(menuId, el) {
-            document.querySelectorAll('.tab-section').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-section').forEach(tab => {
+                tab.style.display = 'none';
+                tab.classList.remove('active');
+            });
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            document.getElementById('menu-' + menuId).classList.add('active');
+            
+            const targetTab = document.getElementById('menu-' + menuId);
+            targetTab.style.display = 'block';
+            void targetTab.offsetWidth; // Trigger reflow
+            targetTab.classList.add('active');
+            
             el.classList.add('active');
             window.scrollTo(0, 0);
 
@@ -343,9 +376,9 @@
             const ram = document.getElementById('si-ram');
             const rom = document.getElementById('si-rom');
 
-            warn.innerHTML = "<span style='color:#4dffb8'>[ SCAN SUCCESSFUL: NON-ROOT MODE ]</span>";
-            warn.style.borderColor = "#4dffb8"; 
-            warn.style.background = "rgba(77, 255, 184, 0.1)";
+            warn.innerHTML = "Scan Successful: Non-Root Mode";
+            warn.style.color = "var(--ios-green)"; 
+            warn.style.background = "rgba(50, 215, 75, 0.1)";
 
             let ua = navigator.userAgent;
             
